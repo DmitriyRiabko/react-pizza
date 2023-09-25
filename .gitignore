@@ -12,7 +12,8 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+react-pizza-v2-reference
+react-pizza-html
 .vscode/*
 !.vscode/extensions.json
 .idea
