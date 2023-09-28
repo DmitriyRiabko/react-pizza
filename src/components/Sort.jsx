@@ -1,6 +1,6 @@
 function Sort(){
-    return( <div class="sort">
-    <div class="sort__label">
+    return( <div className="sort">
+    <div className="sort__label">
       <svg
         width="10"
         height="6"
@@ -13,14 +13,14 @@ function Sort(){
           fill="#2C2C2C"
         />
       </svg>
-      <b>Сортировка по:</b>
-      <span>популярности</span>
+      <b>Sort by:</b>
+      <span>popularity</span>
     </div>
-    <div class="sort__popup">
+    <div className="sort__popup">
       <ul>
-        <li class="active">популярности</li>
-        <li>цене</li>
-        <li>алфавиту</li>
+        <li className="active">popularity</li>
+        <li>price</li>
+        <li>name</li>
       </ul>
     </div>
   </div>)
