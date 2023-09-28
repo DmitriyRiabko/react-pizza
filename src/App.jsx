@@ -4,9 +4,13 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Sort from "./components/Sort";
 import PizzaBlock from "./components/PizzaBlock";
+import db from './../db.json'
 
 function App() {
+ 
+
   return (
+
     <div className="wrapper">
       <Header />
       <div className="content">
@@ -17,9 +21,13 @@ function App() {
           </div>
           <h2 className="content__title">All pizza</h2>
           <div className="content__items">
-            <PizzaBlock title ={'Cheese Pizza'} price={'3.20'}/>
-            <PizzaBlock title ={'Four Meats'} price={'4.99'}/>
-            
+              {
+                db.map(obj =>(
+                  <PizzaBlock 
+                  key={obj.id}
+                  {...obj}/>
+                ))
+              }
           </div>
         </div>
       </div>

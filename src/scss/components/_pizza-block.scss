@@ -46,7 +46,7 @@
         flex: 1;
         cursor: pointer;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 15px;
         @include noselect();
         &.active {
           background: #ffffff;
