@@ -13,23 +13,45 @@ import { useState, useEffect,} from "react";
 const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [categoryId, setCategoryId] = useState(0);
+  const [sortType, setSortType] = useState({
+    name:'popularity',
+    sortProperty:'rating'
+  });
+
 
   useEffect(() => {
+    setIsLoading(true)
+
+    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
     axios
-      .get("https://run.mocky.io/v3/9c6e755b-94f9-4945-80c4-78cdef579ab6")
+      .get('https://6519adf4818c4e98ac60a882.mockapi.io/Items',{
+        params:{
+          category:categoryId >0 ? categoryId : '',
+          sortBy: sortType.sortProperty.replace('-',''),
+          order: order
+
+        }
+      })
+      // ${categoryId>0 ? `category=${categoryId}`:''}
+      // &sortBy=${sortType.sortProperty}&order=desc`)
+
       .then((res) => {
-        setTimeout(() => {
-          setItems(res.data);
-          setIsLoading(false);
-        }, 300);
-      });
-  }, []);
+          setItems(res.data)
+          setIsLoading(false)
+        });
+      window.scrollTo(0,0)
+  }, [categoryId,sortType]);
 
   return (
     <>
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories 
+          value ={categoryId}
+          onChangeCategory={(id)=>setCategoryId(id)}/>
+        <Sort 
+         value ={sortType}
+         onChangeSort={(id)=>setSortType(id)}/>
       </div>
       <h2 className="content__title">
         {isLoading ? "Loading..." : "All pizza"}

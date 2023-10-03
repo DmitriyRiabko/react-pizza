@@ -1,12 +1,22 @@
 import { useState } from "react";
 
-function Sort() {
-  const list = ["popularity", "price", "name"];
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(0);
 
-  const onClickListItem = (i) => {
-    setSelected(i);
+function Sort({value, onChangeSort}) {
+  const list = [
+      {name:'popularity (DESC)', sortProperty:'-rating'}, 
+      {name:'popularity (ASC)', sortProperty:'rating'}, 
+
+      {name:'price (DESC)', sortProperty:'-price'},
+      {name:'price (ASC)', sortProperty:'price'},
+
+      {name:'name (DESC)', sortProperty:'-title'},
+      {name:'name (ASC)', sortProperty:'title'}
+    ];
+
+  const [open, setOpen] = useState(false);
+
+  const onClickListItem = (obj) => {
+    onChangeSort(obj);
     setOpen(false);
   };
 
@@ -26,12 +36,12 @@ function Sort() {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Sort by:</b>
+        <b >Sort by:</b>
         <span 
-          style={{ width: "100px" }} 
+          style={{ width: "150px" }} 
           onClick={() => setOpen(!open)}
         >
-          {list[selected]}
+          {value.name}
         </span>
       </div>
       {open && (
@@ -39,11 +49,11 @@ function Sort() {
           <ul>
             {list.map((item, index) => (
               <li
-                onClick={() => onClickListItem(index)}
-                className={index === selected ? 'active' : ''}
+                onClick={() => onClickListItem(item)}
+                className={value.sortProperty === item.sortProperty ? 'active' : ''}
                 key={index}
               >
-                {item}
+                {item.name}
               </li>
             ))}
           </ul>
