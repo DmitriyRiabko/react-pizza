@@ -3,14 +3,14 @@ import { useState } from "react";
 
 function Sort({value, onChangeSort}) {
   const list = [
-      {name:'popularity (DESC)', sortProperty:'-rating'}, 
-      {name:'popularity (ASC)', sortProperty:'rating'}, 
+      {name:'popularity (DESC)', sortProperty:'rating'}, 
+      {name:'popularity (ASC)', sortProperty:'-rating'}, 
 
-      {name:'price (DESC)', sortProperty:'-price'},
-      {name:'price (ASC)', sortProperty:'price'},
+      {name:'price (DESC)', sortProperty:'price'},
+      {name:'price (ASC)', sortProperty:'-price'},
 
-      {name:'name (DESC)', sortProperty:'-title'},
-      {name:'name (ASC)', sortProperty:'title'}
+      {name:'name (DESC)', sortProperty:'title'},
+      {name:'name (ASC)', sortProperty:'-title'}
     ];
 
   const [open, setOpen] = useState(false);

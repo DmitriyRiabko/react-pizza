@@ -1,19 +1,24 @@
 import React from "react";
-import Categories from "../components/Categories";
-import Sort from "../components/Sort";
-import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-
 import axios from "axios";
 import { useState, useEffect,} from "react";
 
 
+import Categories from "../components/Categories";
+import Sort from "../components/Sort";
+import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
+import Skeleton from "../components/PizzaBlock/Skeleton";
+import Pagination from "../components/Pagination/Pagination";
 
 
-const Home = () => {
+
+
+
+
+const Home = ({searchValue}) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryId, setCategoryId] = useState(0);
+  const [currentPage,setCurrentPage] = useState(1)
   const [sortType, setSortType] = useState({
     name:'popularity',
     sortProperty:'rating'
@@ -29,19 +34,21 @@ const Home = () => {
         params:{
           category:categoryId >0 ? categoryId : '',
           sortBy: sortType.sortProperty.replace('-',''),
-          order: order
-
+          order: order,
+          search: searchValue ? searchValue : '',
+          page:currentPage,
+          limit:4
         }
       })
-      // ${categoryId>0 ? `category=${categoryId}`:''}
-      // &sortBy=${sortType.sortProperty}&order=desc`)
-
       .then((res) => {
           setItems(res.data)
           setIsLoading(false)
         });
       window.scrollTo(0,0)
-  }, [categoryId,sortType]);
+  }, [categoryId,sortType,searchValue,currentPage]);
+
+  const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>)
 
   return (
     <>
@@ -58,9 +65,10 @@ const Home = () => {
       </h2>
       <div className="content__items">
         {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+          ? skeletons
+          :  pizzas}
       </div>
+        <Pagination onChangePage={number=>setCurrentPage(number)}/>
     </>
   );
 };
